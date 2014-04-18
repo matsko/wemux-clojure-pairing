@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<style>
+body, html {
+  padding:0;
+  margin:0;
+  height:100%;
+  position:relative;
+}
+</style>
+</head>
+<body>
+  <canvas id="stage" width="200" height="200"></canvas>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var canvas = $('#stage')[0];
+  canvas.width = document.body.offsetWidth;
+  canvas.height = document.body.offsetHeight;
+  var context = canvas.getContext('2d');
+  if(!context) return;
+
+  var img = context.getImageData(0,0,50,50);
+  var map = img.data;
+  var inc = Math.floor((map.length * 4) / 100);
+  var r,g,b;
+      r = Math.floor(Math.random() * 255);
+      b = Math.floor(Math.random() * 255);
+      g = Math.floor(Math.random() * 255);
+  for(var i=0,x=0;i<map.length;i+=4) {
+    map[i] = r;
+    map[i + 1] = b;
+    map[i + 2] = g;
+  }
+  context.putImageData(img,50,50,10,10,40,40);
+
+  //draw();
+
+  var x = 0, y = 0, flip;
+  function animateRect() {
+          context.strokeStyle = '#990000';
+          context.fillStyle = '#FFCC00';
+          context.rect(0, 0, canvas.width, canvas.height);
+          context.fill();
+          context.strokeRect(x, y, canvas.width - (x*2), canvas.height - (y*2));
+          context.stroke();
+          if(flip) {
+                  x--;
+                  y--;
+                  if(x <= 0 || y <= 0) {
+                    flip = false;
+                  }
+          } else {
+                  x++;
+                  y++;
+                  if(x > 500 || y > 500) {
+                    flip = true;
+                  }
+          }
+          window.requestAnimationFrame(draw);
+  }
+});
+</script>
+</body>
+</html>

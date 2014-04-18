@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello, World!</title>
+<link rel="stylesheet" type="text/css" href="./users.css" />
+</head>
+<body>
+  <div users-ctrl>
+    <div ng-repeat="user in users.getUsers()">
+      {{ user['name'] }}
+    </div>
+  </div>
+</body>
+<script type="application/dart" src="./app.dart"></script>
+<script src="./out.js"></script>
+</html>

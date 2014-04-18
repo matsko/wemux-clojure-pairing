@@ -1,0 +1,35 @@
+(comment
+  (routes 
+
+    (defn logged-in ...)
+
+    (:users fn2 {})
+
+    (:api fn0
+      (:users fn2 {
+        :template "home.html"
+      })
+      (:users2 logged-in :users2) ; /users -> logged-in() -> redirect to users2 or will it just call users2
+
+      (:users2 (redirect :users))
+
+      (:users2 :-/users) ; absolute/
+    )
+  )
+  (routes
+    ...
+  )
+
+  (foo -> params )
+
+    (defn HomeCtrl [request s1 s2 s3 s4])
+
+  (invoke HomeCtrl)
+
+  (route "/hello" fn1 fn2 fn3
+  })
+  (route "/hello2" fn10)
+
+  (api
+    (defn MyCtrl [one two three four])
+    ))

@@ -1,0 +1,98 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<style>
+body, html {
+  padding:0;
+  margin:0;
+  height:100%;
+  position:relative;
+}
+</style>
+</head>
+<body>
+  <canvas id="stage" width="200" height="200"></canvas>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var canvas = $('#stage')[0];
+  canvas.width = document.body.offsetWidth;
+  canvas.height = document.body.offsetHeight;
+  var context = canvas.getContext('2d');
+  if(!context) return;
+
+  function drawCircle(x, y, r) {
+        context.moveTo(x,y);
+        context.arc(x, y, r * 5, 0, 2 * Math.PI, false);
+        context.strokeStyle = '#000000';
+        context.stroke();
+  }
+
+  function divcount() {
+      var min, max;
+      if(arguments.length > 1) {
+          min = arguments[0];
+          max = arguments[1];
+      } else {
+          min = 0;
+          max = arguments[0];
+      }
+      var maxSq, a, b, mul, out = {};
+      maxSq = Math.floor(Math.sqrt(max));
+      for(a = 1; a <= maxSq; a++) {
+          mul = a * a;
+          if(mul > min) {
+              if(!out[mul]) {
+                  out[mul] = 0;
+              }
+              out[mul]++;
+          }
+          for(b = Math.floor(max / a); a * b > min && b > a; b--) {
+              mul = a * b;
+              if(!out[mul]) {
+                  out[mul] = 0;
+              }
+              out[mul] += 2;
+          }
+      }
+      return out;
+  }
+  var nums = divcount(10);
+  function draw() {
+      var centerX = canvas.width / 2;
+      var centerY = canvas.height /2;
+      var spacing = canvas.width / 10;
+      var minY = centerY;
+      var minX = centerX - spacing;
+      var maxY = centerY + spacing;
+      var maxX = centerX;
+      var curX = centerX;
+      var curY = centerY;
+      for(var i = 1; i<11; i++) {
+          var doCircle = false;
+          // ->
+          if(curX <= maxX && curY <= maxY) {
+            curX += spacing;
+            maxX = curX;
+          // V 
+          } else if(curX >= maxX && curY <= maxY) {
+            curY += spacing;
+            maxY = curY;
+          // <-
+          } else if(curX >= maxX && curY >= maxY) {
+            curX -= spacing;
+            minX = curX;
+          // ^ 
+          } else if(curX <= minX && curY >= maxY) {
+            curY -= spacing;
+            minY = curY;
+          }
+          console.log(curX, curY);
+          drawCircle(curX, curY, nums[i]);
+      }
+  }
+  draw();
+});
+</script>
+</body>
+</html>
